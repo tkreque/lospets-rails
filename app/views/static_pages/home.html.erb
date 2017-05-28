@@ -1,0 +1,39 @@
+<div style='width: 800px'>
+    <div id='map' style='width: 800px; height: 500px'></div>
+</div>
+
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({
+        provider: {
+            disableDefaultUI: true
+        },
+        internal: {
+            id: 'map'
+        }
+    },
+    function(){
+        if(navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(displayOnMap);
+    },
+    function(){
+        markers = handler.addMarkers(<%=raw @hash.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+    });
+    
+    function displayOnMap(position){
+        var marker = handler.addMarker({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        });
+        handler.map.centerOn(marker);
+        
+        var circles = handler.addCircles(
+            [{ lat: position.coords.latitude, lng: position.coords.longitude, radius: 50000 }],
+            { strokeColor: '#FF0000'}
+        );
+        handler.bounds.extendWith(circles);
+    };
+</script>
