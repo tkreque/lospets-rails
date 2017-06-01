@@ -7,11 +7,9 @@ class StaticPagesController < ApplicationController
       marker.lng pet.longitude
       marker.title pet.name
       marker.picture ({ 
-        :url => "/icons/icon.png",
-        # :url => "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-        # :url => "https://image.flaticon.com/icons/png/512/33/33622.png",
-        :width   => 48,
-        :height  => 48
+        :url => '/images/icons/icon.png',
+        :width   => 32,
+        :height  => 32,
       })
       marker.infowindow "<table><tr><td><img src='http://www.rd.com/wp-content/uploads/sites/2/2016/02/06-train-cat-shake-hands.jpg' style= 'border-radius: 50%; height:80px; width:80px;'></img><p><br /></td><td>" +
         "Nome: #{pet.name} <br />" +
