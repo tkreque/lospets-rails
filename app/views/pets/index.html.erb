@@ -2,12 +2,10 @@
 
 <h1>Pets</h1>
 
-<table>
+<table class="table">
   <thead>
-    <tr>
+    <tr class="row">
       <th>Name</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
       <th>Address</th>
       <th>Sex</th>
       <th>Photo</th>
@@ -19,10 +17,8 @@
 
   <tbody>
     <% @pets.each do |pet| %>
-      <tr>
+      <tr class="row">
         <td><%= pet.name %></td>
-        <td><%= pet.latitude %></td>
-        <td><%= pet.longitude %></td>
         <td><%= pet.address %></td>
         <td><%= pet.sex %></td>
         <td><%= pet.photo %></td>
@@ -38,4 +34,4 @@
 
 <br>
 
-<%= link_to 'New Pet', new_pet_path %>
+<%= link_to 'New Pet', new_pet_path, class: "btn btn-primary" %>

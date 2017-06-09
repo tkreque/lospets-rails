@@ -1,11 +1,12 @@
-<div class="maps">
-     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<div class="maps col-md-8">
     <div id='map'></div>
 </div>
 
-<div class="sideMenu">
-    <% @square = 1500 %>
+<div class="sideMenu col-md-4">
+    <% @square = 1000 %>
     <%= render 'layouts/filters' %>
 </div>  
 
-<%= render 'static_pages/maps' %>
+<script>
+    <%= render(:partial => "static_pages/maps.js") %>
+</script>

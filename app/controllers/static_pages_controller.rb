@@ -1,13 +1,18 @@
 class StaticPagesController < ApplicationController
   def home
     @pets = Pet.all
+    iconColor = 'red'
     
     @hash = Gmaps4rails.build_markers(@pets) do |pet, marker|
+      
+      iconDraw = Animal.find(pet.animal_id).iconDraw
+      #iconColor = Situation.find(pet.situation_id).iconColor
+      
       marker.lat pet.latitude
       marker.lng pet.longitude
       marker.title pet.name
       marker.picture ({ 
-        :url => '/images/icons/icon.png',
+        :url => "/images/icons/#{iconColor}/#{iconDraw}.png",
         :width   => 32,
         :height  => 32,
       })
@@ -15,7 +20,7 @@ class StaticPagesController < ApplicationController
         "Nome: #{pet.name} <br />" +
         "Animal: #{pet.sex} <br />" +
         "Raça: #{pet.address} <br /></td></tr>" +
-        "<tr><td><input class='btn btn-primary btn-block' type='button' value='Eu quero adotar' name='btn_perfil' onclick='BtnPerfil(#{pet.id})' /></td></tr></table>"
+        "<tr><td><input class='btn btn-primary btn-block' type='button' value='Eu quero adotar' name='btn_perfil' onclick='window.location = 'pets/#{pet.id}'' /></td></tr></table>"
       
     end
   end
