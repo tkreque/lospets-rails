@@ -6,8 +6,8 @@ one:
   address: MyString
   sex: MyString
   photo: MyString
-  animal_id: 
-  user_id: 
+  race_id:  1
+  user_id: 1
   name: MyString
 
 two:
@@ -16,6 +16,6 @@ two:
   address: MyString
   sex: MyString
   photo: MyString
-  animal_id: 
-  user_id: 
+  race_id: 1
+  user_id: 1
   name: MyString

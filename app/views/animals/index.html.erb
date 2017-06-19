@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Animal</th>
-      <th>Race</th>
       <th>Icondraw</th>
       <th colspan="3"></th>
     </tr>
@@ -16,7 +15,6 @@
     <% @animals.each do |animal| %>
       <tr>
         <td><%= animal.animal %></td>
-        <td><%= animal.race %></td>
         <td><%= animal.iconDraw %></td>
         <td><%= link_to 'Show', animal %></td>
         <td><%= link_to 'Edit', edit_animal_path(animal) %></td>

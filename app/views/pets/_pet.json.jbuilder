@@ -1,2 +1,2 @@
-json.extract! pet, :id, :latitude, :longitude, :address, :sex, :photo, :animal_id, :user_id, :created_at, :updated_at, :name
+json.extract! pet, :id, :name, :latitude, :longitude, :address, :sex, :photo, :race_id, :user_id, :situation_id, :created_at, :updated_at
 json.url pet_url(pet, format: :json)

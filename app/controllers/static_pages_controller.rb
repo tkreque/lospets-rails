@@ -1,12 +1,14 @@
 class StaticPagesController < ApplicationController
   def home
     @pets = Pet.all
-    iconColor = 'red'
     
     @hash = Gmaps4rails.build_markers(@pets) do |pet, marker|
       
-      iconDraw = Animal.find(pet.animal_id).iconDraw
-      #iconColor = Situation.find(pet.situation_id).iconColor
+      animal = Animal.find(Race.find(pet.race_id).animal_id).animal
+      race = Race.find(pet.race_id).race
+      situation = Situation.find(pet.situation_id).situation
+      iconDraw = Animal.find(Race.find(pet.race_id).animal_id).iconDraw
+      iconColor = Situation.find(pet.situation_id).iconColor
       
       marker.lat pet.latitude
       marker.lng pet.longitude
@@ -16,11 +18,13 @@ class StaticPagesController < ApplicationController
         :width   => 32,
         :height  => 32,
       })
-      marker.infowindow "<table><tr><td><img src='http://www.rd.com/wp-content/uploads/sites/2/2016/02/06-train-cat-shake-hands.jpg' style= 'border-radius: 50%; height:80px; width:80px;'></img><p><br /></td><td>" +
+      marker.infowindow "<table><tr><td><img src='#{pet.photo}' style= 'border-radius: 50%; height:80px; width:80px;'></img><p><br /></td><td>" +
         "Nome: #{pet.name} <br />" +
-        "Animal: #{pet.sex} <br />" +
-        "Raça: #{pet.address} <br /></td></tr>" +
-        "<tr><td><input class='btn btn-primary btn-block' type='button' value='Eu quero adotar' name='btn_perfil' onclick='window.location = 'pets/#{pet.id}'' /></td></tr></table>"
+        "Animal: #{animal} <br />" +
+        "Raça: #{race} <br />"+
+        "Situação: #{situation} <br />" +
+        "Endereço: #{pet.address} <br /></td></tr>" +
+        "<tr><td><input class='btn btn-primary btn-block' type='button' value='Visualizar perfil' name='btn_perfil' onclick='redirectPet(#{pet.id})' /></td></tr></table>"
       
     end
   end

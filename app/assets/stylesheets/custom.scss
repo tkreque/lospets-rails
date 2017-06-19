@@ -76,6 +76,9 @@ body {
     height: 100%;
     width: 20%;
     float: right;
+    // border-width: 20%;
+    // border-style: groove;
+    // border-radius: 5px;
 }
 
 /** HEADER **/
@@ -97,6 +100,9 @@ body {
 .navbar-inverse{
    background-color: #6FA2FF !important;
    border-color: white !important;
+}
+nav ul li a{
+    color: #fff !important;
 }
 
 /** FOOTER **/

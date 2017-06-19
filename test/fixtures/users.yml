@@ -3,13 +3,13 @@
 one:
   name: MyString
   sex: MyString
-  identification: MyString
+  cpf: MyString
   email: MyString
   photo: MyString
 
 two:
   name: MyString
   sex: MyString
-  identification: MyString
+  cpf: MyString
   email: MyString
   photo: MyString
