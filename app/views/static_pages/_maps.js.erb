@@ -1,15 +1,16 @@
 var handler = Gmaps.build('Google');
 var square = 1000;
+var circle;
 handler.buildMap({
   provider: {
-    disableDefaultUI: true,
+    disableDefaultUI: false,
     zoom: 15
   }, internal: {
     id: 'map'
   }
 }, function(){
-  // FIRST CALL
-  setGeolocation();
+  if(navigator.geolocation)
+    navigator.geolocation.getCurrentPosition(displayOnMap, allData);
 });
 
 
@@ -28,14 +29,12 @@ handler.buildMap({
 // FUNCTION TO CLEAN THE DATA
 function resetMap(){
   console.log(handler);
-  handler.buildMap({
-    provider: {
-      disableDefaultUI: true,
-      zoom: 15
-    }, internal: {
-      id: 'map'
-    }
-  });
+  console.log(handler.map);
+  
+  handler.clusterer.serviceObject.clearMarkers();
+  circle.setMap(null);
+  handler.resetBounds();
+ 
 };
 
 // FUNCTION TO ENABLE GEOLOCATION
@@ -72,11 +71,12 @@ function displayOnMap(position){
 
 // FUNCTION TO SET THE CIRCLE
 function setCircle(position, square){
-  var circles = handler.addCircles(
-    [{ lat: position.coords.latitude, lng: position.coords.longitude, radius: square }],
+  circle = handler.addCircle(
+    { lat: position.coords.latitude, lng: position.coords.longitude, radius: square },
     { strokeColor: '#FF0000'}
   );
-  handler.bounds.extendWith(circles);
+  
+  handler.bounds.extendWith(circle);
   
   setMarkers(position, square);
 }
