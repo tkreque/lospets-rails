@@ -1,6 +1,4 @@
 var handler = Gmaps.build('Google');
-var square = 1000;
-var circle;
 handler.buildMap({
   provider: {
     disableDefaultUI: false,
@@ -9,38 +7,24 @@ handler.buildMap({
     id: 'map'
   }
 }, function(){
-  if(navigator.geolocation)
-    navigator.geolocation.getCurrentPosition(displayOnMap, allData);
+  setGeolocation();
+  searchAddress();
 });
 
-
-// FUNCTION TO SET DEFAULT LOCATION (DISABLED)
-// function defaultLocation(){
-//     var senac = { 
-//         coords: {
-//             latitude: -30.03518581,
-//             longitude: -51.22660625
-//         }
-//     };
-//     displayOnMap(senac);
-//     setMarkers(senac);
-// };
+// INITIALIZE GLOBAL VARIABLES
+var square = 1000; // Circle square for calculations
+var circle = handler.addCircle({ lat: -30.03518581, lng: -51.22660625, radius: square },{ strokeColor: '#FF0000'}); // Circle with default values
+var oldMarker = {latitude: -30.03518581, longitude: -51.22660625}; // The last marker used with default values
 
 // FUNCTION TO CLEAN THE DATA
 function resetMap(){
-  console.log(handler);
-  console.log(handler.map);
-  
   handler.clusterer.serviceObject.clearMarkers();
   circle.setMap(null);
   handler.resetBounds();
- 
 };
 
 // FUNCTION TO ENABLE GEOLOCATION
 function setGeolocation(){
-  resetMap();
-  
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition(displayOnMap, allData);
 };
@@ -50,7 +34,6 @@ function allData(){
   resetMap();
   
   var pets = <%=raw @hash.to_json %>;
-  console.log(pets);
   var markers = handler.addMarkers(pets); 
   
   handler.bounds.extendWith(markers);
@@ -59,13 +42,16 @@ function allData(){
 
 // FUNCTION TO SET THE CIRCLE
 function displayOnMap(position){
+  resetMap();
+  
   var marker = handler.addMarker({
     lat: position.coords.latitude,
     lng: position.coords.longitude    
   });
-
-  handler.map.centerOn(marker);
   
+  oldMarker = position;
+  
+  handler.map.centerOn(marker);
   setCircle(position, square);
 };
 
@@ -75,7 +61,6 @@ function setCircle(position, square){
     { lat: position.coords.latitude, lng: position.coords.longitude, radius: square },
     { strokeColor: '#FF0000'}
   );
-  
   handler.bounds.extendWith(circle);
   
   setMarkers(position, square);
@@ -84,7 +69,6 @@ function setCircle(position, square){
 // FUNCTION TO ADD DATA IN THE CIRCLE
 function setMarkers(position, square){
   var addressLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    
   var pets = <%=raw @hash.to_json %>;
   var arrayPets = [];
 
@@ -96,7 +80,6 @@ function setMarkers(position, square){
       arrayPets.push(pet);
   });
   
-  console.log(arrayPets);
   var markers = handler.addMarkers(arrayPets); 
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
@@ -105,66 +88,53 @@ function setMarkers(position, square){
 // FUNCTION TO ADJUST THE CIRCLE
 function adjustSquare(newSquare){
   square = (newSquare*1000);
-  setGeolocation();
+  displayOnMap(oldMarker);
 };
 
 // FUNCTION TO SEARCH THE ADDRESS AND SET THE NEW ONE
 function searchAddress(){
-  // var input = document.getElementById('pac-input');
-  // var searchBox = new google.maps.places.SearchBox(input);
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  var position;
+  var coords;
+  
+  // Setting up the search box
+  var map = handler.getMap();
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  // map.addListener('bounds_changed', function() {
-  //   searchBox.setBounds(map.getBounds());
-  // });
-
-  // var markers = [];
-  // // Listen for the event fired when the user selects a prediction and retrieve
-  // // more details for that place.
-  // searchBox.addListener('places_changed', function() {
-  //   var places = searchBox.getPlaces();
-
-  //   if (places.length == 0) {
-  //     return;
-  //   }
-    
-  //   // setMarkers(places);
-
-  //   // Clear out the old markers.
-  //   markers.forEach(function(marker) {
-  //     marker.setMap(null);
-  //     cleanSquare(marker);
-  //   });
-  //   markers = [];
-
-
-  //   // For each place, get the icon, name and location.
-  //   var bounds = new google.maps.LatLngBounds();
-  //   places.forEach(function(place) {
-  //     if (!place.geometry) {
-  //       console.log("Returned place contains no geometry");
-  //       return;
-  //     }
-     
-  //     // Create a marker for each place.
-  //     markers.push(new google.maps.Marker({
-  //       map: map,
-  //       icon: icon,
-  //       title: place.name,
-  //       position: place.geometry.location
-  //     }));
-
-  //     setSquare(map,markers);
-
-  //     if (place.geometry.viewport) {
-  //       // Only geocodes have viewport.
-  //       bounds.union(place.geometry.viewport);
-  //     } else {
-  //       bounds.extend(place.geometry.location);
-  //     }
-  //   });
-  //   map.fitBounds(bounds);
-  // });
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+  
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    var bounds = new google.maps.LatLngBounds();
+  
+    places.forEach(function(place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+  
+      if(place.geometry.viewport)
+        bounds.union(place.geometry.viewport);
+      else
+        bounds.extend(place.geometry.location);
+      
+      // Define the position searched
+      position = {
+        coords: {
+          latitude: parseFloat(place.geometry.location.lat()),
+          longitude: parseFloat(place.geometry.location.lng())
+        }
+      };
+      
+      oldMarker = position;
+      
+      displayOnMap(position);
+      map.fitBounds(bounds);
+    });
+  });
 };
 
 

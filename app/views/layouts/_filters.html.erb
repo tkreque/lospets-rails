@@ -1,15 +1,9 @@
 <h1>Filtros</h1>
 <div>
-    <h4>Pesquisar:
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
-    </h4>
-</div>
-<br />
-<div>
     <input style="margin-left: 20px; width: 50%;" type="range" value="1" min="0.5" max="20" step="0.5" name="slider_raio" onchange="adjustSquare(this.value)"  oninput="display.value=slider_raio.value" id="slider_raio" />
     <output id="display" style="color: black; width: 10%; margin: 0px;" name="display" for="slider_raio">1</output>
     <h4>Mostrar:
-        <input class='btn btn-primary' style="width: 20%;" type='button' value='Por Raio' name='btn_showSquare' onclick='setGeolocation()' />
+        <input class='btn btn-primary' style="width: 20%;" type='button' value='Por Raio' name='btn_showSquare' onclick='adjustSquare(slider_raio.value)' />
         <input class='btn btn-primary' style="width: 20%;" type='button' value='Todos' name='btn_showAll' onclick='allData()' />
     </h4>
 </div>
