@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id pet:</strong>
+  <%= @pet_tag.id_pet %>
+</p>
+
+<p>
+  <strong>Id tag:</strong>
+  <%= @pet_tag.id_tag %>
+</p>
+
+<%= link_to 'Edit', edit_pet_tag_path(@pet_tag) %> |
+<%= link_to 'Back', pet_tags_path %>

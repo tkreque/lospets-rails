@@ -1,0 +1,2 @@
+module PetTagsHelper
+end

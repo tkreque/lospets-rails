@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pet Tags</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id pet</th>
+      <th>Id tag</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pet_tags.each do |pet_tag| %>
+      <tr>
+        <td><%= pet_tag.id_pet %></td>
+        <td><%= pet_tag.id_tag %></td>
+        <td><%= link_to 'Show', pet_tag %></td>
+        <td><%= link_to 'Edit', edit_pet_tag_path(pet_tag) %></td>
+        <td><%= link_to 'Destroy', pet_tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pet Tag', new_pet_tag_path %>

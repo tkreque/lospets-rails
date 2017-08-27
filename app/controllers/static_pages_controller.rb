@@ -7,6 +7,15 @@ class StaticPagesController < ApplicationController
       animal = Animal.find(Race.find(pet.race_id).animal_id).animal
       race = Race.find(pet.race_id).race
       situation = Situation.find(pet.situation_id).situation
+      tags = PetTag.where(id_pet: pet.id)
+      
+      tagsName = []
+      for t in tags
+          tagsName.push(Tag.find(t.id_tag).tag)
+      end
+      
+      allTagsName = tagsName.join(",")
+      
       iconDraw = Animal.find(Race.find(pet.race_id).animal_id).iconDraw
       iconColor = Situation.find(pet.situation_id).iconColor
       
@@ -23,7 +32,8 @@ class StaticPagesController < ApplicationController
         "Animal: #{animal} <br />" +
         "Raça: #{race} <br />"+
         "Situação: #{situation} <br />" +
-        "Endereço: #{pet.address} <br /></td></tr>" +
+        "Endereço: #{pet.address} <br />" +
+        "Tags: #{allTagsName} <br /></td></tr>" +
         "<tr><td><input class='btn btn-primary btn-block' type='button' value='Visualizar perfil' name='btn_perfil' onclick='redirectPet(#{pet.id})' /></td></tr></table>"
       
     end

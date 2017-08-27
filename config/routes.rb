@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  # resources :pet_tags
+  # resources :tags
+  # resources :animals
   resources :pets
   resources :users
-  resources :animals
   
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'

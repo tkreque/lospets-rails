@@ -13,6 +13,41 @@ situation_list = [
   [ "Adoção", "blue" ]
 ]
 
+tag_list = [
+  [ "Filhote", "> 5 meses" ],         #1
+  [ "Jovem", " > 1 ano" ],            #2
+  [ "Adulto", " > 3 anos" ],          #3
+  [ "Idoso", "> 5 anos" ],            #4
+  [ "Pelo curto", "Pelo curto" ],     #5
+  [ "Pelo longo", "Pelo longo" ],     #6
+  [ "Porte Pequeno", "< 100cm" ],     #7
+  [ "Porte Médio", "< 1m" ],          #8
+  [ "Porte Grande", "< 2.5m" ]        #9
+]
+
+pet_tag_list = [
+  [1,1],[1,5],[1,8],
+  [2,3],[2,9],
+  [3,1],[3,5],[3,7],
+  [4,4],
+  [5,2],[5,8],
+  [6,2],
+  [7,3],[7,6],[7,9],
+  [8,1],
+  [9,4],[9,5],
+  [10,1],[10,6],[10,7],
+  [11,4],[11,7],
+  [12,2],[12,6],[12,9],
+  [13,1],
+  [14,1],[14,8],
+  [15,2],[15,6],[15,9],
+  [16,3],[16,6],
+  [17,3],[17,5],[17,8],
+  [18,5],
+  [19,4],[19,9],
+  [20,5],[20,7]
+]
+
 animal_list = [
   [ "Cachorro", "dog" ],
   [ "Gato", "cat" ],
@@ -71,4 +106,12 @@ end
 
 pet_list.each do |v1,v2,v3,v4,v5,v6|
   Pet.create(name: v1, address: v2, photo: v3, sex: v4, race_id: v5, situation_id: v6)
+end
+
+tag_list.each do |v1,v2|
+  Tag.create(tag: v1, description: v2)
+end
+
+pet_tag_list.each do |v1,v2|
+  PetTag.create(id_pet: v1, id_tag: v2)
 end
