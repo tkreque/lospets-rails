@@ -6,4 +6,14 @@
         <input class='btn btn-primary' style="width: 20%;" type='button' value='Por Raio' name='btn_showSquare' onclick='adjustSquare(slider_raio.value)' />
         <input class='btn btn-primary' style="width: 20%;" type='button' value='Todos' name='btn_showAll' onclick='allData()' />
     </h4>
+    <br />
+    
+     <form method="get">
+        <% tags = getTags %>
+        <% for t in tags %>
+            <%= check_box_tag("filters", t.tag, checked = false, :onclick => 'setFilters(this.value)') %>
+            <%= label_tag(t.tag) %><small> (<%= t.description %>)</small><br />
+        <% end %>
+    </form>
+    
 </div>

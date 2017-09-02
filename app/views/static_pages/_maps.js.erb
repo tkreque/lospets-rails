@@ -15,6 +15,8 @@ handler.buildMap({
 var square = 1000; // Circle square for calculations
 var circle = handler.addCircle({ lat: -30.03518581, lng: -51.22660625, radius: square },{ strokeColor: '#FF0000'}); // Circle with default values
 var oldMarker = {latitude: -30.03518581, longitude: -51.22660625}; // The last marker used with default values
+var arrayFilters = []; // Array to store the filters
+var option = 1; //
 
 // FUNCTION TO CLEAN THE DATA
 function resetMap(){
@@ -71,7 +73,9 @@ function setMarkers(position, square){
   var addressLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   var pets = <%=raw @hash.to_json %>;
   var arrayPets = [];
+  var arrayPetsTemp = [];
 
+  console.log(filters);
   $.each(pets, function(index, pet) {
     var addressPet = new google.maps.LatLng(pet.lat,pet.lng);
     var distance = google.maps.geometry.spherical.computeDistanceBetween(addressLocation, addressPet);
@@ -79,8 +83,23 @@ function setMarkers(position, square){
     if (distance <= square)
       arrayPets.push(pet);
   });
+  console.log(arrayPets);
   
-  var markers = handler.addMarkers(arrayPets); 
+  if (arrayFilters.length == 0)
+    arrayPetsTemp = arrayPets;
+  else{
+    $.each(arrayPets, function(index, pet){
+      for(i=0; i<arrayFilters.length; i++){
+        console.log(arrayFilters);
+        console.log(pet.infowindow);
+        if(pet.infowindow.indexOf(arrayFilters[i]) != -1)
+          arrayPetsTemp.push(pet);  
+      }
+    });
+  }
+  
+  console.log(arrayPetsTemp);
+  var markers = handler.addMarkers(arrayPetsTemp); 
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
 };
@@ -90,6 +109,25 @@ function adjustSquare(newSquare){
   square = (newSquare*1000);
   displayOnMap(oldMarker);
 };
+
+// FUNCTION TO ADJUST FILTERS
+function setFilters(filter){
+  var exist = -1;
+  
+  for(i=0; i<arrayFilters.length; i++){
+    if(filter == arrayFilters[i])
+      exist = i;
+  }
+  
+  if(exist > -1)
+    arrayFilters.splice(exist, 1);
+  else
+    arrayFilters.push(filter);
+    
+    
+  displayOnMap(oldMarker);
+};
+
 
 // FUNCTION TO SEARCH THE ADDRESS AND SET THE NEW ONE
 function searchAddress(){
