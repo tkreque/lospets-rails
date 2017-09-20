@@ -1,6 +1,9 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "los pets", root_path, id: "logo" %>
+    <div class="logo">
+      <!--<%=  link_to image_tag('lospetsarrumar.png', alt: 'LosPets'), '/' %>-->
+      <%=  link_to image_tag('lospetsarrumar.jpg', alt: 'LosPets', width: 140, height: 80), '/' %>
+    </div>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Mensagens",   '#' %></li>

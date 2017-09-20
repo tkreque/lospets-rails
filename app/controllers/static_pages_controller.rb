@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
   def home
     @pets = Pet.all
     
+    
     @hash = Gmaps4rails.build_markers(@pets) do |pet, marker|
       
       animal = Animal.find(Race.find(pet.race_id).animal_id).animal

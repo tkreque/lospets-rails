@@ -27,6 +27,15 @@ var arrayFilters = [];                    // Array to store the filters
 var option = 0;                           // Store the last option choosed (1 - Circle || 2 - all data)
 var pets = <%=raw @hash.to_json %>;       // All pets from the database
 
+//
+//      INITIAL FLOW
+//        CREATE MAP -> SET GEOLOCATION
+//                            ->  ALL DATA  ->  CHECK FILTERS ->  SHOW MARKERS
+//                            ->  SET CIRCLE -> CHECK FILTERS ->  SHOW MARKERS
+//                                                                  -> SEARCH ADDRESS -> CHECK FILTERS -> SHOW MARKERS
+//                                                                  -> UPDATE FILTERS -> SHOW MARKERS
+//
+
 // FUNCTION TO CLEAN THE DATA
 function resetMap(){
   handler.clusterer.serviceObject.clearMarkers();
