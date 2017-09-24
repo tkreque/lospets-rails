@@ -8,6 +8,8 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'shareable'
+gem 'social-share-button'
 ####################################
 gem 'puma'
 gem 'sass-rails'

@@ -89,6 +89,9 @@ body {
   float: left;
   margin-right: 10px;
 }
+.logo a:hover{
+    background-color: transparent !important;
+}
 
 .logo:hover {
   color: #fff;
@@ -130,4 +133,14 @@ footer ul {
 footer ul li {
   float: left;
   margin-left: 15px;
+}
+
+
+/** Pet **/
+.pet_image{
+    border-radius: 50%;
+}
+.static_map{
+    height: 300px;
+    width: 600px;
 }

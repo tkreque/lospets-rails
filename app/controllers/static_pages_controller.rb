@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     @pets = Pet.all
-    
+    @situations = Situation.all
     
     @hash = Gmaps4rails.build_markers(@pets) do |pet, marker|
       
@@ -45,4 +45,5 @@ class StaticPagesController < ApplicationController
 
   def about
   end
+  
 end

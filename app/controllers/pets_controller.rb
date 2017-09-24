@@ -11,6 +11,9 @@ class PetsController < ApplicationController
   # GET /pets/1.json
   def show
     @pet = Pet.find(params[:id])
+    @situation = Situation.find(@pet.situation_id).situation
+    @animal = Animal.find(Race.find(@pet.race_id).animal_id).animal
+    @race  = Race.find(@pet.race_id).race
   end
 
   # GET /pets/new

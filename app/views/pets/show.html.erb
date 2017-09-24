@@ -1,39 +1,43 @@
+
 <p id="notice"><%= notice %></p>
+<div class="jumbotron text-center">
+  <div class="row">
+    <div class="col-md-4">
+      <%= image_tag(@pet.photo, size:180, class:"pet_image") %>    
+    </div>
+    <div class="col-md-8">
+      <strong>Situação:</strong>
+      <%= @situation %>
+      <br />
+      <strong>Nome:</strong>
+      <%= @pet.name %>    
+      <br />
+      <strong>Animal:</strong>
+      <%= @animal %>
+      <br />
+      <strong>Raça:</strong>
+      <%= @race %>
+      <br />
+      <strong>Sexo:</strong>
+      <%= @pet.sex %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>
+        <strong>Endereço:</strong>
+        <%= @pet.address %>
+      </p>
+    </div>
+    <div class="col-md-8">
+      <img src="https://maps.googleapis.com/maps/api/staticmap?center=<%= @pet.latitude %>,<%= @pet.longitude %>&zoom=13&size=600x300&maptype=roadmap&markers=<%= @pet.latitude %>,<%= @pet.longitude %>&key=AIzaSyDMI_uP_6ASCcL8ETf3uTu2_8hy1hn1ROw" class="static_map"></img>
+    </div>
+  </div>
+  <div class="row">
+    <%= social_share_button_tag("Você me viu?", :url => pet_url, :image => @pet.photo, desc: "Olá eu sou "+@pet.name+", você me viu por ai?", via: "LosPets") %>
+  </div>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @pet.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @pet.address %>
-</p>
-
-<p>
-  <strong>Sex:</strong>
-  <%= @pet.sex %>
-</p>
-
-<p>
-  <strong>Photo:</strong>
-  <%= @pet.photo %>
-</p>
-
-<p>
-  <strong>race_id:</strong>
-  <%= @pet.race_id %>
-</p>
-
-<p>
-  <strong>user_id:</strong>
-  <%= @pet.user_id %>
-</p>
-
-<p>
-  <strong>situation_id:</strong>
-  <%= @pet.situation_id %>
-</p>
 
 <%= link_to 'Edit', edit_pet_path(@pet) %> |
 <%= link_to 'Back', pets_path %>

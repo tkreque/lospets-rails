@@ -12,6 +12,17 @@
  *
  *= require_tree .
  *= require_self
+ *= require social-share-button
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+$size: 36px;
+
+.social-share-button {
+  .ssb-icon {
+    background-size: $size $size !important;
+    height: $size !important;
+    width: $size !important;
+  }
+}

@@ -1,13 +1,27 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <div class="logo">
-      <!--<%=  link_to image_tag('lospetsarrumar.png', alt: 'LosPets'), '/' %>-->
-      <%=  link_to image_tag('lospetsarrumar.jpg', alt: 'LosPets', width: 140, height: 80), '/' %>
+      <%=  link_to image_tag('lospets_logo.png', alt: 'LosPets', width: 140, height: 80), root_path %>
+      <!--<%=  link_to image_tag('lospetsarrumar.jpg', alt: 'LosPets', width: 140, height: 80), root_path %>-->
     </div>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Mensagens",   '#' %></li>
-        <li><%= link_to "Log in", '#' %></li>
+        <% if current_user.present? %>
+          <li>
+            <p>
+              Olá <%= current_user.name.split(" ")[0] %>
+              <% if current_user.image.present? %>
+                <%= image_tag(current_user.image, size: "40") %>
+              <% end %>
+            </p>
+          </li>
+          <li><%= link_to "Mensagens", '#' %></li>
+          <li><%= link_to "Sair", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li>
+            <%= link_to "Log in", '/users/sign_in' %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   </div>
