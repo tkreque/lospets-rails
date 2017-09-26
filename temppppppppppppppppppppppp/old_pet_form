@@ -30,15 +30,10 @@
     <%= f.label :photo %>
     <%= f.text_field :photo %>
   </div>
-  
-  <div class="field form-group">
-    <label>Animal</label>
-    <%= f.select :animal, @animals.collect { |animal| [animal.animal, animal.id] } %>
-  </div>
 
   <div class="field form-group">
     <%= f.label :race_id %>
-    <%= f.select :race_id, @races.collect { |race| [race.race, race.id] if race.animal_id = :animal } %>
+    <%= f.text_field :race_id %>
   </div>
 
   <div class="field form-group">

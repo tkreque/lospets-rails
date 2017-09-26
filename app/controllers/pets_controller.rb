@@ -19,8 +19,11 @@ class PetsController < ApplicationController
   # GET /pets/new
   def new
     @pet = Pet.new
+    @situations = Situation.all
+    @animals = Animal.all
+    @races = Race.all
   end
-
+  
   # GET /pets/1/edit
   def edit
   end

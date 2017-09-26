@@ -1,0 +1,12 @@
+ <% if @pet.present? %>
+    <meta property="og:url" content="<%= pet_url %>" />
+    <meta property="og:title" content="LosPets - Você me viu?" />
+    <meta property="og:description" content="Oi eu sou <%= @pet.name %>, você me viu por ai?" />
+    <meta property="og:image" content= "<%= @pet.photo %>" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Você me viu?" />
+    <meta name="twitter:description" content="Oi eu sou <%= @pet.name %>, você me viu por ai? #LosPets <%= pet_url %>" />
+    <meta name="twitter:image" content="<%= @pet.photo %>" />
+    <meta name="twitter:domain" content="<%= root_url %>" />
+  <% end %>

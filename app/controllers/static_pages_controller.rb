@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
   def home
     @pets = Pet.all
     @situations = Situation.all
+    @animals = Animal.all
     
     @hash = Gmaps4rails.build_markers(@pets) do |pet, marker|
       
@@ -36,7 +37,6 @@ class StaticPagesController < ApplicationController
         "Endereço: #{pet.address} <br />" +
         "Tags: #{allTagsName} <br /></td></tr>" +
         "<tr><td><input class='btn btn-primary btn-block' type='button' value='Visualizar perfil' name='btn_perfil' onclick='redirectPet(#{pet.id})' /></td></tr></table>"
-      
     end
   end
   

@@ -8,6 +8,7 @@ handler.buildMap({
   }
 }, function(){
   setGeolocation();
+  setLegend();
   searchAddress();
 });
 
@@ -26,6 +27,8 @@ var oldMarker = {
 var arrayFilters = [];                    // Array to store the filters
 var option = 0;                           // Store the last option choosed (1 - Circle || 2 - all data)
 var pets = <%=raw @hash.to_json %>;       // All pets from the database
+var situations = <%=raw @situations.to_json %>;
+var animals = <%=raw @animals.to_json %>;
 
 // FUNCTION TO CLEAN THE DATA
 function resetMap(){
@@ -85,7 +88,7 @@ function setMarkers(position, square){
   var arrayPets = [];
   var arrayPetsTemp = [];
 
-  console.log(filters);
+  // console.log(filters);
   $.each(pets, function(index, pet) {
     var addressPet = new google.maps.LatLng(pet.lat,pet.lng);
     var distance = google.maps.geometry.spherical.computeDistanceBetween(addressLocation, addressPet);
@@ -93,22 +96,22 @@ function setMarkers(position, square){
     if (distance <= square)
       arrayPets.push(pet);
   });
-  console.log(arrayPets);
+  // console.log(arrayPets);
   
   if (arrayFilters.length == 0)
     arrayPetsTemp = arrayPets;
   else{
     $.each(arrayPets, function(index, pet){
       for(i=0; i<arrayFilters.length; i++){
-        console.log(arrayFilters);
-        console.log(pet.infowindow);
+        // console.log(arrayFilters);
+        // console.log(pet.infowindow);
         if(pet.infowindow.indexOf(arrayFilters[i]) != -1)
           arrayPetsTemp.push(pet);  
       }
     });
   }
   
-  console.log(arrayPetsTemp);
+  // console.log(arrayPetsTemp);
   var markers = handler.addMarkers(arrayPetsTemp); 
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
@@ -192,3 +195,30 @@ function redirectPet(id){
   window.location.href = url;
 };
 
+// FUNCTION TO ADD THE LEGEND
+function setLegend(){
+  var icons = [];
+  
+  for(i=0; i<situations.length; i++){
+    var icon = {
+      name: situations[i].situation,
+      iconDog: '/images/icons/'+ situations[i].iconColor +'/'+ animals[0].iconDraw +'.png',
+      iconCat: '/images/icons/'+ situations[i].iconColor +'/'+ animals[1].iconDraw +'.png'
+    }
+    
+    icons.push(icon);
+  }
+  
+  var legend = document.getElementById('legend');
+  for (var key in icons) {
+    var name = icons[key].name;
+    var iconD = icons[key].iconDog;
+    var iconC = icons[key].iconCat;
+    var div = document.createElement('div');
+    div.innerHTML = '<img src="' + iconD + '"><img src="' + iconC + '"> ' + name;
+    legend.appendChild(div);
+  }
+  
+  console.log(handler.map.serviceObject);
+  handler.map.serviceObject.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+}
