@@ -34,7 +34,13 @@
     </div>
   </div>
   <div class="row">
-    <%= social_share_button_tag("Olá eu sou "+@pet.name+", você me viu por ai? #LosPets", :url => pet_url, :image => @pet.photo, desc: "Olá eu sou "+@pet.name+", você me viu por ai? #LosPets") %>
+    <% if @situation == "Adoção" %>
+      <%= social_share_button_tag("Olá eu sou "+@pet.name+", você me quer me adotar? #LosPets", :url => pet_url, :image => @pet.photo, desc: "Olá eu sou "+@pet.name+", você me quer me adotar? #LosPets") %>
+    <% elsif @situation == "Encontrado" %>
+      <%= social_share_button_tag("Olá eu sou "+@pet.name+", você sabe quem é meu dono? #LosPets", :url => pet_url, :image => @pet.photo, desc: "Olá eu sou "+@pet.name+", você sabe quem é meu dono? #LosPets") %>
+    <% else %>
+      <%= social_share_button_tag("Olá eu sou "+@pet.name+", você me viu por ai? #LosPets", :url => pet_url, :image => @pet.photo, desc: "Olá eu sou "+@pet.name+", você me viu por ai? #LosPets") %>
+    <% end %>
   </div>
 </div>
 
